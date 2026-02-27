@@ -2,28 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Student;
 use Illuminate\Http\Request;
 
 class StudentController extends Controller
 {
     //
-    function show()
+    function getStudent()
     {
-        return "Student List";
-    }
-
-    function about($name)
-    {
-        return "About Student: $name";
-    }
-
-    function add()
-    {
-        return "Add new Student";
-    }
-
-    function delete()
-    {
-        return "Delete Student";
+        $students = Student::all();
+        return response()->json($students);
     }
 }

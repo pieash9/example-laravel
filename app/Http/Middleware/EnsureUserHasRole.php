@@ -13,8 +13,14 @@ class EnsureUserHasRole
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next, string ...$roles): Response
     {
+        $user = $request->user();
+
+        if (! $user || empty($roles) || ! $user->hasRole(...$roles)) {
+            abort(403, 'You do not have permission to access this resource.');
+        }
+
         return $next($request);
     }
 }

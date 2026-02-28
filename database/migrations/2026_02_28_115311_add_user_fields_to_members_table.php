@@ -12,7 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('members', function (Blueprint $table) {
-            //
+            $table->foreignId('user_id')->nullable()->after('id')->constrained()->nullOnDelete()->unique();
+            $table->string('membership_no')->nullable()->after('email');
+            $table->string('address')->nullable()->after('phone');
+            $table->unique('membership_no');
         });
     }
 
@@ -22,7 +25,9 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('members', function (Blueprint $table) {
-            //
+            $table->dropConstrainedForeignId('user_id');
+            $table->dropUnique(['membership_no']);
+            $table->dropColumn(['membership_no', 'address']);
         });
     }
 };

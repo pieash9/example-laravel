@@ -6,6 +6,50 @@
 @source '../**/*.js';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    --font-sans: 'Sora', 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+:root {
+    --page-background: radial-gradient(circle at 20% 15%, #dbeafe 0%, #f8fafc 45%, #e0f2fe 100%);
+}
+
+body {
+    min-height: 100vh;
+    background-image: var(--page-background);
+    color: #0f172a;
+}
+
+@layer components {
+    .panel {
+        @apply rounded-2xl border border-slate-200/70 bg-white/80 p-5 shadow-sm backdrop-blur;
+    }
+
+    .panel-muted {
+        @apply rounded-2xl border border-slate-200 bg-slate-50/80 p-5;
+    }
+
+    .btn-primary {
+        @apply inline-flex items-center justify-center rounded-xl bg-sky-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-sky-700;
+    }
+
+    .btn-secondary {
+        @apply inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-slate-400 hover:text-slate-900;
+    }
+
+    .btn-danger {
+        @apply inline-flex items-center justify-center rounded-xl bg-rose-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-rose-700;
+    }
+
+    .input-control {
+        @apply w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-200;
+    }
+
+    .label-text {
+        @apply mb-1 block text-xs font-semibold uppercase tracking-wide text-slate-600;
+    }
+
+    .stat-card {
+        @apply rounded-2xl border border-slate-200/70 bg-white/90 p-4 shadow-sm;
+    }
 }

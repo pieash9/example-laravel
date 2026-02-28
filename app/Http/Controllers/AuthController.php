@@ -17,13 +17,13 @@ class AuthController extends Controller
         $request->validate([
             'name' => 'required|string',
             'email' => 'required|email|unique:users',
-            'password' => 'required|min:6'
+            'password' => 'required|min:6',
         ]);
 
         User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt($request->password)
+            'password' => bcrypt($request->password),
         ]);
 
         return response()->json(['message' => 'user created'], 201);
@@ -32,11 +32,11 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->validate([
-            'email'    => 'required|email',
+            'email' => 'required|email',
             'password' => 'required|string',
         ]);
 
-        if (!$token = Auth::guard('api')->attempt($credentials)) {
+        if (! $token = Auth::guard('api')->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
@@ -62,7 +62,7 @@ class AuthController extends Controller
     {
         $accessToken = $request->cookie('access_token');
 
-        if (!$accessToken) {
+        if (! $accessToken) {
             return response()->json(['error' => 'Access token not found'], 401);
         }
 
@@ -87,7 +87,7 @@ class AuthController extends Controller
     {
         $refreshToken = $request->cookie('refresh_token');
 
-        if (!$refreshToken) {
+        if (! $refreshToken) {
             return response()->json(['error' => 'Refresh token not found'], 401);
         }
 
@@ -96,7 +96,7 @@ class AuthController extends Controller
             ->where('expires_at', '>', now())
             ->first();
 
-        if (!$token) {
+        if (! $token) {
             return response()->json(['error' => 'Invalid refresh token'], 401);
         }
 

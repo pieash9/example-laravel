@@ -2,7 +2,7 @@ name: Deploy to Shared Hosting
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   deploy:
@@ -26,11 +26,13 @@ jobs:
             # Install Composer dependencies (without dev dependencies)
             composer install --no-dev --optimize-autoloader
 
-            # Clear and rebuild Laravel cache
-            php artisan cache:clear
-            php artisan config:clear
-            php artisan view:clear
-            php artisan route:clear
+            # Clear all caches using optimize:clear
+            php artisan optimize:clear
+
+            # Run database migrations
+            php artisan migrate --force
+
+            # Optimize the application (caches config, routes, and views)
             php artisan optimize
 
             # Set proper permissions (use chmod instead of chown)

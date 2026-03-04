@@ -10,18 +10,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install SSH key
-        uses: webfactory/ssh-agent@v0.7.0
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
       - name: Deploy via SSH
-        run: |
-          ssh -p 2249 -o StrictHostKeyChecking=no pieash9_1@103.174.51.100 "
-            cd /var/www/27493b2c-714f-4a45-aa12-aeaf694f4411/library-managment &&
-            git pull origin main &&
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          port: ${{ secrets.SSH_PORT }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          script: |
+            cd /var/www/27493b2c-714f-4a45-aa12-aeaf694f4411/library-managment
+            git pull origin main
             # Add any other deployment commands here, e.g.:
             # npm install
             # composer install
             # pm2 restart app
-          "
